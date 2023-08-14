@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block title %}Flights Data Visualization  {% endblock%}
+{%block content%}  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Date Filtering</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  .chartMenu {
+    width: 100vw;
+    height: 40px;
+    background: #1A1A1A;
+    color: rgba(54, 162, 235, 1);
+  }
+  .chartMenu p {
+    padding: 10px;
+    font-size: 20px;
+  }
+  .chartCard {
+    width: 100vw;
+    height: calc(100vh - 40px);
+    background: rgba(54, 162, 235, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .chartBox {
+    width: 700px;
+    padding: 20px;
+    border-radius: 20px;
+    border: solid 3px rgba(54, 162, 235, 1);
+    background: white;
+  }
+</style>
+</head>
+<body>
+<div class="chartMenu">
+  <p>Filtering Dates in Charts <span id="chartVersion"></span></p>
+</div>
+<div class="chartCard">
+  <div class="chartBox">
+    <canvas id="myChart"></canvas>
+    <input onchange="filterData()" type="date" id="startdate" value="2023-6-21">
+    <input onchange="filterData()" type="date" id="enddate" value="2023-6-27">
+  </div>
+</div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+<script>
+// setup 
+const dates = ['2023-06-21', '2023-06-22', '2023-06-23', '2023-06-24', '2023-06-25', '2023-06-26', '2023-06-27', 
+    '2023-06-28', '2023-06-29', '2023-06-30', '2023-07-01', '2023-07-02', '2023-07-03', '2023-07-04'];
+const datapoints = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+const data = {
+  labels: dates,
+  datasets: [{
+    label: 'Weekly Sales',
+    data: datapoints,
+    backgroundColor: [
+      'rgba(255, 26, 104, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(0, 0, 0, 0.2)'
+    ],
+    borderColor: [
+      'rgba(255, 26, 104, 1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)',
+      'rgba(0, 0, 0, 1)'
+    ],
+    borderWidth: 1
+  }]
+};
+
+// config 
+const config = {
+  type: 'bar',
+  data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+};
+
+// render init block
+const myChart = new Chart(
+  document.getElementById('myChart'),
+  config
+);
+
+function filterData(){
+    const dates2 = [...dates];
+    console.log(dates2);
+    const startdate = document.getElementById('startdate');
+    const enddate = document.getElementById('enddate');
+
+    const indexstartdate = dates2.indexOf(startdate.value);
+    const indexenddate = dates2.indexOf(enddate.value);
+    // console.log(indexstartdate);
+
+    const filterDate = dates2.slice(indexstartdate, indexenddate + 1);
+
+    myChart.config.data.labels = filterDate;
+
+    const datapoints2 = [...datapoints];
+    const filterDatapoints = datapoints2.slice(indexstartdate, indexenddate + 1);
+    
+    myChart.config.data.datasets[0].data = filterDatapoints;
+
+    myChart.update();
+
+}
+
+const dataBar = {
+  labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  datasets: [{
+    label: 'Weekly Sales',
+    data: [18, 12, 6, 9, 12, 3, 9],
+    backgroundColor: [
+      'rgba(255, 26, 104, 0.2)',
+      'rgba(54, 162, 235, 0.2)',
+      'rgba(255, 206, 86, 0.2)',
+      'rgba(75, 192, 192, 0.2)',
+      'rgba(153, 102, 255, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(0, 0, 0, 0.2)'
+    ],
+    borderColor: [
+      'rgba(255, 26, 104, 1)',
+      'rgba(54, 162, 235, 1)',
+      'rgba(255, 206, 86, 1)',
+      'rgba(75, 192, 192, 1)',
+      'rgba(153, 102, 255, 1)',
+      'rgba(255, 159, 64, 1)',
+      'rgba(0, 0, 0, 1)'
+    ],
+    borderWidth: 1
+  }]
+};
+
+// config 
+const configBar = {
+  type: 'bar',
+  data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+};
+
+// render init block
+const myChartBar = new Chart(
+  document.getElementById('myChartBar'),
+  configBar
+);
+
+// Instantly assign Chart.js version
+const chartVersion = document.getElementById('chartVersion');
+chartVersion.innerText = Chart.version;
+</script>
+{% endblock %}

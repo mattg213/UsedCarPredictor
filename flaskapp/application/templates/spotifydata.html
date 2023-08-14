@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %} Spotify data {% endblock%}
+{%block content%}
+
+<head>
+    <title>Spotify Dashboard</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Spotify Dashboard</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Streams</th>
+                    <th>Date</th>
+                    <th>Genre</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    <td>{{ row['Streams'] }}</td>
+                    <td>{{ row['Date'] }}</td>
+                    <td>{{ row['Genre'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+
+
+{% endblock %}
