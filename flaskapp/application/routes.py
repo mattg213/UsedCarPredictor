@@ -8,9 +8,10 @@ import joblib
 from flask import request, jsonify
 
 #Load Model
-#model = joblib.load()
+model = joblib.load("SUV_model.pk1")
 
 #Create app routes
+
 @app.route("/")
 def home():
     return render_template("homepage.html")
@@ -30,40 +31,40 @@ def salesbylocation():
     return render_template("sales_by_location.html")
 
 
-#route for model
-#@app.route('/predict', methods=['POST'])
-#def predict():
+# route for model
+@app.route('/predict', methods=['POST'])
+def predict():
     # Get data from POST request
-    #data = request.json
+    data = request.json
 
     # Extract the required fields
-    #has_accidents = data['has_accidents']
-    #make_name = data['make_name']
-    #mileage = data['mileage']
-    #model_name = data['model_name']
-    #owner_count = data['owner_count']
-    #transmission = data['transmission']
-    #year = data['year']
+    has_accidents = data['has_accidents']
+    make_name = data['make_name']
+    mileage = data['mileage']
+    model_name = data['model_name']
+    owner_count = data['owner_count']
+    transmission = data['transmission']
+    year = data['year']
 
     # Combine the fields into a feature vector
-    #car_info = [has_accidents, make_name, mileage, model_name, owner_count, transmission, year]
+    car_info = [has_accidents, make_name, mileage, model_name, owner_count, transmission, year]
 
     # Preprocess the input (if needed)
-    #processed_info = preprocess_input(car_info)  # Define this function as per your preprocessing requirements
+    processed_info = preprocess_input(car_info)  # Define this function as per your preprocessing requirements
 
     # Make prediction
-    #prediction = model.predict([processed_info])
+    prediction = model.predict([processed_info])
 
     # Convert prediction to a response
-    #result = {"price": prediction[0]}
+    result = {"price": prediction[0]}
 
-    #return jsonify(result)
+    return jsonify(result)
 
-#def preprocess_input(car_info):
-    # Implement preprocessing specific to your model
-    # This could include encoding categorical variables, scaling numerical variables, etc.
-    # Return the processed input as needed for the model
-  #  pass
+def preprocess_input(car_info):
+#     Implement preprocessing specific to your model
+#     This could include encoding categorical variables, scaling numerical variables, etc.
+#     Return the processed input as needed for the model
+#    pass
 
 
 
