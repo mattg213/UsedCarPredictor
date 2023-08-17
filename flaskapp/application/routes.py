@@ -32,6 +32,9 @@ def about():
 def salesbylocation():
     return render_template("sales_by_location.html")
 
+@app.route("/price_data")
+def pricedata():
+    return render_template("price_data.html")
 
 #route for model
 
