@@ -154,6 +154,7 @@ cython_debug/
 
 Data/
 SUV_model.pk1
+.DS_Store
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
