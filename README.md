@@ -152,3 +152,7 @@ pipeline = Pipeline(steps=[('preprocessor', preprocessor), ('model', model)])
 
 We can now fit the pipeline and then call it for predictions. After fitting and predicting, we ran a r2 score function and got a score
 of 0.918. After we were happy with the model, we saved the model using the ```joblib``` library into ```SUV_model.pk1```
+
+### To Run The Flask App
+To run the flask app, navigate to the ```flaskapp``` folder inside your terminal. You then need to type ```export FLASK_APP='run.py'```
+and after these steps are done you are able to run your flask app with ```flask run```.
