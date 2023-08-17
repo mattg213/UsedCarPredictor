@@ -16,6 +16,10 @@
 - Dask
 - Pandas
 - Flask
+- SK-Learn
+- NumPy
+- Matplotlib
+- Glob
 
 # The Data
 Since the data was provided to us, all we needed to do was load it into a dataframe. The first issue we ran into, was that the data file was
