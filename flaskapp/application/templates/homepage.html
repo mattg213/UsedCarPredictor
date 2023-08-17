@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %} Homepage {% endblock%}
+{%block content%}
+<title> Used car Price Predictor </title>
+<body>
+    <h1>Used Car Price Predictor</h1>
+   
+ <p>By: Luis Martinez, Matt G, Emmanuel Antwi, Hunter Gilliam, Rashidah Namutebi, Steven Steinbring
+    </p>   
+    <form id="predict-form">
+        <label for="has_accidents">Has Accidents:</label>
+        <input type="checkbox" id="has_accidents" name="has_accidents"><br><br>
+
+        <label for="make_name">Make Name:</label>
+        <input type="text" id="make_name" name="make_name"><br><br>
+
+        <label for="mileage">Mileage:</label>
+        <input type="number" id="mileage" name="mileage"><br><br>
+
+        <label for="model_name">Model Name:</label>
+        <input type="text" id="model_name" name="model_name"><br><br>
+
+        <label for="owner_count">Owner Count:</label>
+        <input type="number" id="owner_count" name="owner_count"><br><br>
+
+        <label for="transmission">Transmission:</label>
+        <input type="text" id="transmission" name="transmission"><br><br>
+
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year"><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="result"></div>
+    
+    
+    <script>
+       $(document).ready(function() {
+        $("#predict-form").submit(function(event) {
+            event.preventDefault();
+
+            var formData = {
+                has_accidents: $("#has_accidents").is(':checked'),
+                make_name: $("#make_name").val(),
+                mileage: $("#mileage").val(),
+                model_name: $("#model_name").val(),
+                owner_count: $("#owner_count").val(),
+                transmission: $("#transmission").val(),
+                year: $("#year").val()
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "/predict",
+                data: JSON.stringify(formData),
+                contentType: "application/json",
+                success: function(response) {
+                    $("#result").html("Predicted Price: " + response.price);
+                },
+                error: function(err) {
+                    console.log(err);
+                }
+            });
+        });
+    });
+    </script>
+</body>
+{% endblock %}
