@@ -88,7 +88,7 @@ We noticed, very obviously, that the top 3 body types were the Pickup Truck, Sed
 the next. So we decided to make our machine learning model solely based on the ```SUV / Crossover``` body type. We have plenty of data over it
 and this allows the model to be more niche to each specific body type because we could make one specifically for each.
 
-## Model
+# Model
 Our goal for the model was to allow a user to predict an accurate price of a vehicle that they provide. We decided on using a ```RandomForestRegressor```
 to achieve this. We had to sacrifice certain columns of data to allow for an easier experience for the user. 
 
