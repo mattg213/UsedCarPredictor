@@ -1,14 +1,15 @@
 from application import app
 from flask import render_template, url_for
 import pandas as pd
-import json
+# import json
 import plotly
+import numpy as np
 import plotly.express as px
 import joblib
 from flask import request, jsonify
 
 #Load Model
-pipeline_path = 'C:\\Users\\Lucky\\OneDrive\\Desktop\\FinalProject\\flaskapp\\application\\SUV_model.pk1'
+pipeline_path = './SUV_model.pk1'
 pipeline = joblib.load(pipeline_path)
 
 
@@ -47,14 +48,32 @@ def predict():
         'model_name': [data['model_name']],
         'owner_count': [data['owner_count']],
         'transmission': [data['transmission']],
-        'year': [data['year']]
+        'year': [data['year']],
+        'daysonmarket' : np.NaN,
+        'dealer_zip' : np.NaN,
+        'engine_displacement' : np.NaN,
+        'horsepower' : np.NaN,
+        'latitude' : np.NaN,
+        'longitude' : np.NaN,
+        'seller_rating' : np.NaN,
+        'body_type' : 'SUV / Crossover',
+        'fuel_type' : np.NaN,
+        'maximum_seating' : np.NaN,
+        'wheel_system' : np.NaN,
+        'wheel_system_display' : np.NaN
     })
 
     # Use the pipeline to predict the price
     prediction = pipeline.predict(car_info)
+    
+    formatted = "%.2f"%prediction[0]
+    
+    formatted = round(float(formatted) / 500.0) * 500.0
+    
+    money_format = '${:,.2f}'.format(formatted)
 
     # Convert prediction to a response
-    result = {"price": prediction[0]}
+    result = {"price": money_format}
 
     return jsonify(result)
 
