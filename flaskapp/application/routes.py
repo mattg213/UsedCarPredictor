@@ -58,7 +58,7 @@ def predict():
 
     return jsonify(result)
 
-# Other code
+
 
 
 
